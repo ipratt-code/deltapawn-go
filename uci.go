@@ -271,8 +271,10 @@ func handleGo(toEng chan bool, words []string) {
 			tell("info string go ", words[1], " not implemented")
 		}
 	} else {
-		tell("info string suppose go infinite")
-		limits.setInfinite(true)
+		// tell("info string suppose go infinite")
+		// limits.setInfinite(true)
+		tell("info string default depth 16")
+		limits.setDepth(16)
 		toEng <- true
 	}
 }
