@@ -42,7 +42,6 @@ func (m move) String() string {
 	s := m.StringFull()
 	s = s[1:3] + s[5:]
 	if strings.ContainsAny(pc2Fen(int(m.pr())), "NBRQnbrq") {
-		fmt.Println("pawn promotion")
 		s = strings.ToLower(s)
 		//s = s + pc2Fen(int(m.pr()))
 	}
