@@ -150,10 +150,12 @@ func root(toEngine chan bool, frEngine chan string) {
 		inCheck := b.isAttacked(b.King[b.stm], b.stm.opp())
 		bm := ml[0]
 		bs := noScore // bm keeps the best from prev iteration in case of immediate stop before first is done in this iteration
+
 		for depth = 1; depth <= limits.depth && !limits.stop; depth++ {
 			ml.sort()
 			bs = noScore // bm keeps the best from prev iteration in case of immediate stop before first is done in this iterastion
 			alpha, beta = minEval, maxEval
+
 			for ix, mv := range ml { // root move loop
 				childPV.clear()
 
@@ -421,6 +423,7 @@ func initQS(ml *moveList, b *boardStruct) {
 	ml.clear()
 	b.genAllCaptures(ml)
 }
+
 func qs(beta int, b *boardStruct) int {
 	ev := signEval(b.stm, evaluate(b))
 	if ev >= beta {
