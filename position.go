@@ -146,16 +146,16 @@ func initAtksKings() {
 }
 
 type boardStruct struct {
-	key     uint64
-	sq      [64]int
-	wbBB    [2]bitBoard
-	pieceBB [nPt]bitBoard
-	King    [2]int
-	ep      int
-	castlings
-	stm    color
-	count  [12]int
-	rule50 int //set to 0 if a pawn or capt move otherwise increment
+	key       uint64
+	sq        [64]int // The squares of the board filled with piece values
+	wbBB      [2]bitBoard
+	pieceBB   [nPt]bitBoard
+	King      [2]int
+	ep        int
+	castlings // The castlings of the board
+	stm       color
+	count     [12]int
+	rule50    int // set to 0 if a pawn or capt move otherwise increment
 }
 type color int
 
