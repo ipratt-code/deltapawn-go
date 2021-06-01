@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // directions
 const (
@@ -38,6 +41,13 @@ type move uint64
 func (m move) String() string {
 	s := m.StringFull()
 	s = s[1:3] + s[5:]
+	if strings.ContainsAny(pc2Fen(int(m.pr())), "NBRQnbrq") {
+		fmt.Println("pawn promotion")
+		s = strings.ToLower(s)
+		//s = s + pc2Fen(int(m.pr()))
+	}
+
+	fmt.Println(s)
 	return s
 }
 func (m move) StringFull() string {
@@ -51,7 +61,9 @@ func (m move) StringFull() string {
 
 func (m *move) packMove(fr, to, pc, cp, pr, epSq int, castl castlings) {
 	// 6 bits fr, 6 bits to, 4 bits pc, 4 bits cp, 4 bits prom, 4 bits ep, 4 bits castl = 32 bits
-	if epSq == empty{panic("wtf ep")}
+	if epSq == empty {
+		panic("wtf ep")
+	}
 	epFile := 0
 	if epSq != 0 {
 		epFile = epSq%8 + 1
@@ -128,6 +140,7 @@ func (m move) onlyMv() move {
 }
 
 type moveList []move
+
 func (ml *moveList) new(size int) {
 	*ml = make(moveList, 0, size)
 }

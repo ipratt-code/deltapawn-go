@@ -212,7 +212,7 @@ func root(toEngine chan bool, frEngine chan string) {
 		}
 		ebfTab.ebf(transDepth)
 		tell(fmt.Sprintf("info score cp %v depth %v nodes %v  time %v nps %v pv %v", bm.eval(), transDepth, cntNodes, int(t1.Seconds()*1000), uint(nps), pv.String()))
-		frEngine <- fmt.Sprintf("bestmove %v%v", sq2Fen[bm.fr()], sq2Fen[bm.to()])
+		frEngine <- fmt.Sprintf("bestmove %v", bm.String()) //%v", sq2Fen[bm.fr()], sq2Fen[bm.to()])
 	}
 }
 
