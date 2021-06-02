@@ -12,7 +12,7 @@ import (
 var tell = mainTell
 var trim = strings.TrimSpace
 var low = strings.ToLower
-
+var defaultDepth = 15
 var saveBm = ""
 
 func uci(input chan string) {
@@ -216,89 +216,89 @@ func handleSetOption(words []string) {
 	}
 }
 
-func defaultGo(toEng chan bool) {
-	tell("info string default depth 16")
-	limits.setDepth(16)
-	toEng <- true
-}
-
 // go  searchmoves <move1-moveii>/ponder/wtime <ms>/ btime <ms>/winc <ms>/binc <ms>/movestogo <x>/
 //     depth <x>/nodes <x>/movetime <ms>/mate <x>/infinite
 func handleGo(toEng chan bool, words []string) {
 	// TODO: Right now can only handle one of them at a time. We need to be able to mix them
 	limits.init()
 	if len(words) > 1 {
-		words[1] = trim(low(words[1]))
-		switch words[1] {
-		case "searchmoves":
-			tell("info string go searchmoves not implemented")
-			defaultGo(toEng)
-		case "ponder":
-			tell("info string go ponder not implemented")
-			defaultGo(toEng)
-		case "wtime":
-			tell("99")
-			defaultGo(toEng)
-		case "btime":
-			tell("99")
-			defaultGo(toEng)
-		case "winc":
-			tell("99")
-			defaultGo(toEng)
-		case "binc":
-			tell("99")
-			defaultGo(toEng)
-		case "movestogo":
-			tell("99")
-			defaultGo(toEng)
-		case "depth":
-			d := -1
-			err := error(nil)
-			if len(words) >= 3 {
-				d, err = strconv.Atoi(words[2])
-			}
-			if d < 0 || err != nil {
-				tell("info string depth not numeric")
-				return
-			}
-			limits.setDepth(d)
-			toEng <- true
-		case "nodes":
-			tell("info string go nodes not implemented")
-			defaultGo(toEng)
-		case "movetime":
-			tell("info string movetime not implemented")
-			defaultGo(toEng)
-			/*
-				mt, err := strconv.Atoi(words[2])
-				if err != nil {
-					tell("info string ", words[2], " not numeric")
+		for i, _ := range words {
+			words[i] = trim(low(words[i]))
+			switch words[i] {
+			case "searchmoves":
+				tell("info string go searchmoves not implemented")
+				//defaultGo(toEng)
+			case "ponder":
+				tell("info string go ponder not implemented")
+				//defaultGo(toEng)
+			case "wtime":
+				tell("99")
+				//defaultGo(toEng)
+			case "btime":
+				tell("99")
+				//defaultGo(toEng)
+			case "winc":
+				tell("99")
+				//defaultGo(toEng)
+			case "binc":
+				tell("99")
+				//defaultGo(toEng)
+			case "movestogo":
+				tell("99")
+				//defaultGo(toEng)
+			case "depth":
+				d := -1
+				err := error(nil)
+				if len(words[i:]) >= 2 {
+					d, err = strconv.Atoi(words[i+1])
+				}
+				if d < 0 || err != nil {
+					tell("info string depth not numeric")
+					tell(fmt.Sprintf("info string default depth %d", defaultDepth))
+					limits.setDepth(defaultDepth)
 					return
 				}
-				limits.setMoveTime(mt)
-				toEng <- true
-			*/
-		case "mate": // mate <x>  mate in x moves
-			tell("info string go mate not implemented")
-			defaultGo(toEng)
-		case "infinite":
-			// dont do that because why would u
-			//limits.setInfinite(true)
-			//toEng <- true
-			tell("info string why would you do that")
-			defaultGo(toEng)
-		case "register":
-			tell("info string go register not implemented")
-			defaultGo(toEng)
-		default:
-			tell("info string go ", words[1], " not implemented")
-			defaultGo(toEng)
+				fmt.Printf("setdepth %d", d)
+				limits.setDepth(d)
+				//toEng <- true
+			case "nodes":
+				tell("info string go nodes not implemented")
+				//defaultGo(toEng)
+			case "movetime":
+				tell("info string movetime not implemented")
+				//defaultGo(toEng)
+				/*
+					mt, err := strconv.Atoi(words[2])
+					if err != nil {
+						tell("info string ", words[2], " not numeric")
+						return
+					}
+					limits.setMoveTime(mt)
+					toEng <- true
+				*/
+			case "mate": // mate <x>  mate in x moves
+				tell("info string go mate not implemented")
+				//defaultGo(toEng)
+			case "infinite":
+				// dont do that because why would u
+				//limits.setInfinite(true)
+				//toEng <- true
+				tell("info string why would you do that")
+				//defaultGo(toEng)
+			case "register":
+				tell("info string go register not implemented")
+				//defaultGo(toEng)
+			default:
+				//tell("info string go ", words[i], " not implemented")
+				//defaultGo(toEng)
+			}
 		}
+		toEng <- true
 	} else {
 		// tell("info string suppose go infinite")
 		// limits.setInfinite(true)
-		tell("info string default depth 16")
-		limits.setDepth(16)
+		tell(fmt.Sprintf("info string default depth %d", defaultDepth))
+		limits.setDepth(defaultDepth)
 		toEng <- true
 	}
 }
