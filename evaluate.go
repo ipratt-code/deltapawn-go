@@ -27,6 +27,121 @@ const (
 
 var pieceVal = [16]int{100, -100, 325, -325, 350, -350, 500, -500, 950, -950, 10000, -10000, 0, 0, 0, 0}
 
+var wPawnTab = [64]int{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	50, 50, 50, 50, 50, 50, 50, 50,
+	10, 10, 20, 30, 30, 20, 10, 10,
+	5, 5, 10, 25, 25, 10, 5, 5,
+	0, 0, 0, 20, 20, 0, 0, 0,
+	5, -5, -10, 0, 0, -10, -5, 5,
+	5, 10, 10, -20, -20, 10, 10, 5,
+	0, 0, 0, 0, 0, 0, 0, 0,
+}
+var bPawnTab = [64]int{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	50, 50, 50, 50, 50, 50, 50, 50,
+	10, 10, 20, 30, 30, 20, 10, 10,
+	5, 5, 10, 25, 25, 10, 5, 5,
+	0, 0, 0, 20, 20, 0, 0, 0,
+	5, -5, -10, 0, 0, -10, -5, 5,
+	5, 10, 10, -20, -20, 10, 10, 5,
+	0, 0, 0, 0, 0, 0, 0, 0,
+}
+var wKnightTab = [64]int{
+	-50, -40, -30, -30, -30, -30, -40, -50,
+	-40, -20, 0, 0, 0, 0, -20, -40,
+	-30, 0, 10, 15, 15, 10, 0, -30,
+	-30, 5, 15, 20, 20, 15, 5, -30,
+	-30, 0, 15, 20, 20, 15, 0, -30,
+	-30, 5, 10, 15, 15, 10, 5, -30,
+	-40, -20, 0, 5, 5, 0, -20, -40,
+	-50, -40, -30, -30, -30, -30, -40, -50,
+}
+var bKnightTab = [64]int{
+	-50, -40, -30, -30, -30, -30, -40, -50,
+	-40, -20, 0, 0, 0, 0, -20, -40,
+	-30, 0, 10, 15, 15, 10, 0, -30,
+	-30, 5, 15, 20, 20, 15, 5, -30,
+	-30, 0, 15, 20, 20, 15, 0, -30,
+	-30, 5, 10, 15, 15, 10, 5, -30,
+	-40, -20, 0, 5, 5, 0, -20, -40,
+	-50, -40, -30, -30, -30, -30, -40, -50,
+}
+
+var wBishopTab = [64]int{
+	-20, -10, -10, -10, -10, -10, -10, -20,
+	-10, 0, 0, 0, 0, 0, 0, -10,
+	-10, 0, 5, 10, 10, 5, 0, -10,
+	-10, 5, 5, 10, 10, 5, 5, -10,
+	-10, 0, 10, 10, 10, 10, 0, -10,
+	-10, 10, 10, 10, 10, 10, 10, -10,
+	-10, 5, 0, 0, 0, 0, 5, -10,
+	-20, -10, -10, -10, -10, -10, -10, -20,
+}
+var bBishopTab = [64]int{
+	-20, -10, -10, -10, -10, -10, -10, -20,
+	-10, 0, 0, 0, 0, 0, 0, -10,
+	-10, 0, 5, 10, 10, 5, 0, -10,
+	-10, 5, 5, 10, 10, 5, 5, -10,
+	-10, 0, 10, 10, 10, 10, 0, -10,
+	-10, 10, 10, 10, 10, 10, 10, -10,
+	-10, 5, 0, 0, 0, 0, 5, -10,
+	-20, -10, -10, -10, -10, -10, -10, -20,
+}
+
+var wRookTab = [64]int{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	5, 10, 10, 10, 10, 10, 10, 5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	0, 0, 0, 5, 5, 0, 0, 0,
+}
+var bRookTab = [64]int{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	5, 10, 10, 10, 10, 10, 10, 5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	-5, 0, 0, 0, 0, 0, 0, -5,
+	0, 0, 0, 5, 5, 0, 0, 0,
+}
+
+var wQueenTab = [64]int{
+	-20, -10, -10, -5, -5, -10, -10, -20,
+	-10, 0, 0, 0, 0, 0, 0, -10,
+	-10, 0, 5, 5, 5, 5, 0, -10,
+	-5, 0, 5, 5, 5, 5, 0, -5,
+	0, 0, 5, 5, 5, 5, 0, -5,
+	-10, 5, 5, 5, 5, 5, 0, -10,
+	-10, 0, 5, 0, 0, 0, 0, -10,
+	-20, -10, -10, -5, -5, -10, -10, -20,
+}
+var bQueenTab = [64]int{
+	-20, -10, -10, -5, -5, -10, -10, -20,
+	-10, 0, 0, 0, 0, 0, 0, -10,
+	-10, 0, 5, 5, 5, 5, 0, -10,
+	-5, 0, 5, 5, 5, 5, 0, -5,
+	0, 0, 5, 5, 5, 5, 0, -5,
+	-10, 5, 5, 5, 5, 5, 0, -10,
+	-10, 0, 5, 0, 0, 0, 0, -10,
+	-20, -10, -10, -5, -5, -10, -10, -20,
+}
+
+var wKingTab = [64]int{
+	-30, -40, -40, -50, -50, -40, -40, -30,
+	-30, -40, -40, -50, -50, -40, -40, -30,
+	-30, -40, -40, -50, -50, -40, -40, -30,
+	-30, -40, -40, -50, -50, -40, -40, -30,
+	-20, -30, -30, -40, -40, -30, -30, -20,
+	-10, -20, -20, -20, -20, -20, -20, -10,
+	20, 20, 0, 0, 0, 0, 20, 20,
+	20, 30, 10, 0, 0, 10, 30, 20,
+}
+
 var knightFile = [8]int{-4, -3, -2, +2, +2, 0, -2, -4}
 var knightRank = [8]int{-15, 0, +5, +6, +7, +8, +2, -4}
 var centerFile = [8]int{-8, -1, 0, +1, +1, 0, -1, -3}
@@ -93,46 +208,41 @@ func evaluate(b *boardStruct) int {
 	return ev
 }
 
-// Score returns the piece square table value for a given piece on a given square. Stage = MG/EG
+// pcSqScore returns the piece square table value for a given piece on a given square. Stage = MG/EG
 func pcSqScore(pc, sq int) int {
 	return pSqTab[pc][sq]
 }
 
 // PstInit intits the pieces-square-tables when the program starts
 func pcSqInit() {
-	for pc := 0; pc < 12; pc++ {
+	/*for pc := 0; pc < 12; pc++ {
 		for sq := 0; sq < 64; sq++ {
 			pSqTab[pc][sq] = 0
 		}
-	}
+	}*/
 
-	for sq := 0; sq < 64; sq++ {
+	pSqTab[wP] = wPawnTab //pawnFile[fl] + pawnRank[rk]
 
-		fl := sq % 8
-		rk := sq / 8
+	pSqTab[wN] = wKnightTab //knightFile[fl] + knightRank[rk]
+	pSqTab[wB] = wBishopTab //centerFile[fl] + centerFile[rk]*2
 
-		pSqTab[wP][sq] = pawnFile[fl] + pawnRank[rk]
+	pSqTab[wR] = wRookTab //centerFile[fl] * 5
 
-		pSqTab[wN][sq] = knightFile[fl] + knightRank[rk]
-		pSqTab[wB][sq] = centerFile[fl] + centerFile[rk]*2
+	pSqTab[wQ] = wQueenTab //centerFile[fl] + centerFile[rk]
 
-		pSqTab[wR][sq] = centerFile[fl] * 5
-
-		pSqTab[wQ][sq] = centerFile[fl] + centerFile[rk]
-
-		pSqTab[wK][sq] = (kingFile[fl] + kingRank[rk]) * 8
-	}
+	pSqTab[wK] = wKingTab //(kingFile[fl] + kingRank[rk]) * 8
 
 	// bonus for e4 d5 and c4
-	pSqTab[wP][E2], pSqTab[wP][D2], pSqTab[wP][E3], pSqTab[wP][D3], pSqTab[wP][E4], pSqTab[wP][D4], pSqTab[wP][C4] = 0, 0, 6, 6, 24, 20, 12
-
+	//pSqTab[wP][E2], pSqTab[wP][D2], pSqTab[wP][E3], pSqTab[wP][D3], pSqTab[wP][E4], pSqTab[wP][D4], pSqTab[wP][C4] = 0, 0, 6, 6, 24, 20, 12
 	// long diagonal
-	for sq := A1; sq <= H8; sq += NE {
-		pSqTab[wB][sq] += longDiag - 2
-	}
-	for sq := H1; sq <= A8; sq += NW {
-		pSqTab[wB][sq] += longDiag
-	}
+	/*
+		for sq := A1; sq <= H8; sq += NE {
+			pSqTab[wB][sq] += longDiag - 2
+		}
+		for sq := H1; sq <= A8; sq += NW {
+			pSqTab[wB][sq] += longDiag
+		}
+	*/
 
 	// for Black
 	for pt := Pawn; pt <= King; pt++ {

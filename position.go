@@ -147,17 +147,17 @@ func initAtksKings() {
 
 type boardStruct struct {
 	key       uint64
-	sq        [64]int // The squares of the board filled with piece values
-	wbBB      [2]bitBoard
-	pieceBB   [nPt]bitBoard
-	King      [2]int
-	ep        int
-	castlings // The castlings of the board
-	stm       color
-	count     [12]int
-	rule50    int // set to 0 if a pawn or capt move otherwise increment
+	sq        [64]int       // The squares of the board filled with piece values
+	wbBB      [2]bitBoard   // White and black piece bitboards
+	pieceBB   [nPt]bitBoard // Bitboards for the pieces
+	King      [2]int        // King squares for white and black
+	ep        int           // enpassant square
+	castlings               // The castlings of the board
+	stm       color         // the side to move (color: white or black)
+	count     [12]int       // counts how many pieces we have for each piece
+	rule50    int           // 50 move rule count: set to 0 if a pawn or capt move otherwise increment
 }
-type color int
+type color int // White or black color
 
 func (c color) opp() color {
 	return c ^ 0x1

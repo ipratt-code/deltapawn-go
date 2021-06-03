@@ -211,6 +211,19 @@ func handleSetOption(words []string) {
 		} else {
 			tell("info string The Hash value is not numeric " + strings.Join(words[:], " "))
 		}
+	case "masks":
+		/*
+			if trim(low(words[3])) != "value" {
+				tell("info string 'value' is missing in this option " + strings.Join(words[:], " "))
+			}
+			if val, err := strconv.Atoi(trim(words[4])); err == nil {
+				if err = trans.new(val); err != nil {
+					tell(err.Error())
+				}
+			} else {
+				tell("info string The Hash value is not numeric " + strings.Join(words[:], " "))
+			}
+		*/
 	default:
 		tell("info string Don't have this option " + strings.Join(words[:], " "))
 	}
